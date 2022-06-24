@@ -1,38 +1,43 @@
-var sectionnumber = 0
 var paranumber = 0
+
+var readerelement = document.getElementById("readerelement")
+
+var ctrldiv = document.createElement("div")
+readerelement.parentElement.insertBefore(ctrldiv, readerelement.nextSibling)
 
 var nextp = document.createElement("button")
 nextp.innerText = ">"
 nextp.setAttribute("onclick", "paranumber++; setText()")
-//document.body.appendChild(nextp)
-document.getElementById("readerelement").parentElement.insertBefore(nextp, document.getElementById("readerelement").nextSibling)
 
 var prevp = document.createElement("button")
 prevp.innerText = "<"
 prevp.setAttribute("onclick", "paranumber--; setText()")
-//document.body.appendChild(prevp)
-document.getElementById("readerelement").parentElement.insertBefore(prevp, document.getElementById("readerelement").nextSibling)
 
-var nexts = document.createElement("button")
-nexts.innerText = ">>"
-nexts.setAttribute("onclick", "sectionnumber++; paranumber = 0; setText()")
-//document.body.appendChild(nexts)
-document.getElementById("readerelement").parentElement.insertBefore(nexts, document.getElementById("readerelement").nextSibling)
+var nexttp = document.createElement("button")
+nexttp.innerText = ">>"
+nexttp.setAttribute("onclick", "paranumber += 10; setText()")
 
-var prevs = document.createElement("button")
-prevs.innerText = "<<"
-prevs.setAttribute("onclick", "sectionnumber--; paranumber = 0; setText()")
-//document.body.appendChild(prevs)
-document.getElementById("readerelement").parentElement.insertBefore(prevs, document.getElementById("readerelement").nextSibling)
+var prevtp = document.createElement("button")
+prevtp.innerText = "<<"
+prevtp.setAttribute("onclick", "paranumber -= 10; setText()")
 
-var book = document.createElement("book")
+var section = document.createElement("a");
+
+ctrldiv.appendChild(prevtp);
+ctrldiv.appendChild(prevp);
+ctrldiv.appendChild(section);
+ctrldiv.appendChild(nextp);
+ctrldiv.appendChild(nexttp);
+
+var book = document.createElement("html")
 setBook("https://standardebooks.org/ebooks/henryk-sienkiewicz/the-deluge/jeremiah-curtin/text/single-page")
 setText()
 
 
 function setText() {
-  const readerelement = document.getElementById("readerelement")
-  readerelement.innerText = book.getElementsByTagName("section")[sectionnumber].children[paranumber].innerText
+  readerelement.innerText = book.getElementsByTagName("p")[paranumber].innerText;
+  var h2 = book.getElementsByTagName("p")[paranumber].parentElement.getElementsByTagName("h2");
+  section.innerText = h2.item(0) ? h2.item(0).innerText : "No header";
 }
 
 function httpGet(theUrl) {

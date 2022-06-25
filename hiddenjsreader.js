@@ -23,21 +23,30 @@ prevtp.setAttribute("onclick", "paranumber -= 10; setText()")
 
 var section = document.createElement("a");
 
+var inp = document.createElement("input");
+inp.setAttribute("type", "text");
+
+var cinp = document.createElement("button");
+cinp.innerText = "Select";
+cinp.setAttribute("onclick", "setBook(inp.value)");
+
 ctrldiv.appendChild(prevtp);
 ctrldiv.appendChild(prevp);
 ctrldiv.appendChild(section);
 ctrldiv.appendChild(nextp);
 ctrldiv.appendChild(nexttp);
+ctrldiv.appendChild(inp);
+ctrldiv.appendChild(cinp);
 
 var book = document.createElement("html")
 setBook("https://standardebooks.org/ebooks/henryk-sienkiewicz/the-deluge/jeremiah-curtin/text/single-page")
-setText()
 
 
 function setText() {
   readerelement.innerText = book.getElementsByTagName("p")[paranumber].innerText;
   var h2 = book.getElementsByTagName("p")[paranumber].parentElement.getElementsByTagName("h2");
-  section.innerText = h2.item(0) ? h2.item(0).innerText : "No header";
+  var h3 = book.getElementsByTagName("p")[paranumber].parentElement.getElementsByTagName("h3");
+  section.innerText = h2.item(0) ? h2.item(0).innerText + (h3.item(0) ? ": " + h3.item(0).innerText : "") : "No header";
 }
 
 function httpGet(theUrl) {
@@ -49,4 +58,5 @@ function httpGet(theUrl) {
 
 function setBook(url) {
   book.innerHTML = httpGet(url);
+  setText();
 }
